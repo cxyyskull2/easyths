@@ -192,7 +192,7 @@ class ConditionBuyOperation(BaseOperation):
                 # self.sleep(0.2)
                 # self.get_pop_dialog()[1].type_keys("{ESC}", pause=0.15)
                 is_op_success = True
-                op_message = f"执行{stock_code}的条件单成功"
+                op_message = f"执行{stock_code}的条件买入成功"
 
             result_data = {
                 "stock_code": stock_code,

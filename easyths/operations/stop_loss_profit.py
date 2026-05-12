@@ -174,7 +174,9 @@ class StopLossProfitOperation(BaseOperation):
                             has_order = True
                             break
                 except IndexError as e:
-                    self.logger.warn("没有相应的股票持仓记录，无法设置止盈止损", error=str(e))
+                    msg = f"没有相应的股票持仓记录，无法设置止盈止损，请检查是否持仓该股票"
+                    self.logger.warn(msg, error=str(e))
+                    return OperationResult(success=False, message=msg, data={"stock_code": stock_code, "message": msg})
 
                 # 处理没有对应持仓股票的情况，因为没有就对应持仓就不能设置止盈止损
                 if not has_order:
