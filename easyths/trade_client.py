@@ -500,6 +500,53 @@ class TradeClient:
         operation_id = self.execute_operation("condition_buy", params)
         return self.get_operation_result(operation_id, timeout=timeout)
 
+    def condition_sell(
+        self,
+        stock_code: str,
+        target_price: float,
+        quantity: int,
+        expire_days: int = 30,
+        timeout: Optional[float] = None
+    ) -> dict:
+        """
+        条件卖出股票
+
+        设置条件卖出单，当股价达到目标价格时自动触发卖出。
+
+        Args:
+            stock_code: 股票代码（6位数字）
+            target_price: 目标价格（触发价格）
+            quantity: 卖出数量（股票必须是100的倍数，可转债必须是10的倍数）
+            expire_days: 有效期（自然日），可选1/3/5/10/20/30，默认30
+            timeout: 操作超时时间（秒）
+
+        Returns:
+            操作结果（OperationResult），格式为：
+            {
+                "success": bool,
+                "data": {...},  # 业务数据
+                "message": str | None,  # 错误信息或成功消息
+                "timestamp": str  # ISO 8601 格式时间
+            }
+
+        Raises:
+            TradeClientError: 连接失败、API 错误或操作超时
+
+        Examples:
+            >>> client = TradeClient(...)
+            >>> result = client.condition_sell("600000", 15.00, 100, expire_days=30)
+            >>> if result["success"]:
+            ...     print(result["data"]["message"])
+        """
+        params = {
+            "stock_code": stock_code,
+            "target_price": target_price,
+            "quantity": quantity,
+            "expire_days": expire_days
+        }
+        operation_id = self.execute_operation("condition_sell", params)
+        return self.get_operation_result(operation_id, timeout=timeout)
+
     def stop_loss_profit(
         self,
         stock_code: str,

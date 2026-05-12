@@ -122,6 +122,9 @@ def test_reverse_repo():
 def test_condition_bug():
     interest_res = client.condition_buy("000001", 12, 1000)
     print(f"条件买入: {interest_res}")
+def test_condition_sell():
+    interest_res = client.condition_sell("000001", 12.4, 1000)
+    print(f"条件卖出: {interest_res}")
 
 def test_stop_loss_profit():
     interest_res = client.stop_loss_profit("000001", 3.1, 2.5)
@@ -159,11 +162,12 @@ if __name__ == '__main__':
     # test_sell()
     # test_reverse_repo()
     # test_condition_bug()
+    test_condition_sell()
     # test_stop_loss_profit()
     # test_condition_order_query()
     # test_condition_order_canel()
-    test_market_buy()
-    test_market_sell()
+    # test_market_buy()
+    # test_market_sell()
 
 
     # 撤单操作测试

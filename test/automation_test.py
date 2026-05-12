@@ -17,6 +17,7 @@ from easyths.operations.historical_commission_query import HistoricalCommissionQ
 from easyths.operations.reverse_repo_buy import ReverseRepoBuyOperation
 from easyths.operations.reverse_repo_query import ReverseRepoQueryOperation
 from easyths.operations.condition_buy import ConditionBuyOperation
+from easyths.operations.condition_sell import ConditionSellOperation
 from easyths.operations.stop_loss_profit import StopLossProfitOperation
 from easyths.operations.condition_order_query import ConditionOrderQueryOperation
 from easyths.operations.condition_order_cancel import ConditionOrderCancelOperation
@@ -312,6 +313,32 @@ def test_condition_buy_op():
         automator.disconnect()
 
 
+def test_condition_sell_op():
+    # 创建自动化器
+    automator = TonghuashunAutomator()
+
+    # 连接
+    automator.connect()
+
+    try:
+        # 创建操作
+        op = ConditionSellOperation(automator)
+
+        # 执行操作（同步）
+        params = {
+            "stock_code": "000001",
+            "target_price": 12.1,
+            "quantity": 100
+        }
+
+        result = op.run(params)
+        print(f"操作结果: {result.success}, data: {result.data}")
+
+    finally:
+        # 断开连接
+        automator.disconnect()
+
+
 def test_stop_loss_profit_op():
     # 创建自动化器
     automator = TonghuashunAutomator()
@@ -454,5 +481,6 @@ if __name__ == "__main__":
     # test_stop_loss_profit_op()
     # test_condition_order_query_op()
     # test_condition_order_cancel_op()
-    test_market_buy_op()
+    # test_market_buy_op()
     # test_market_sell_op()
+    test_condition_sell_op()

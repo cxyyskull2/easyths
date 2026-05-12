@@ -274,6 +274,34 @@ def condition_buy(
 
 
 @mcp_server.tool
+def condition_sell(
+    stock_code: str,
+    target_price: float,
+    quantity: int,
+    expire_days: int = 30
+) -> dict:
+    """条件卖出股票
+
+    当股价达到目标价格时自动卖出
+
+    Args:
+        stock_code: 股票代码（6位数字）
+        target_price: 目标触发价格
+        quantity: 卖出数量（股票必须是100的倍数，可转债必须是10的倍数）
+        expire_days: 策略有效期（天），可选值: 1, 3, 5, 10, 20, 30
+
+    Returns:
+        条件单创建结果
+    """
+    return _execute_operation("condition_sell", {
+        "stock_code": stock_code,
+        "target_price": target_price,
+        "quantity": quantity,
+        "expire_days": expire_days
+    })
+
+
+@mcp_server.tool
 def condition_order_query(return_type: str = "json") -> dict:
     """查询条件单信息
 
