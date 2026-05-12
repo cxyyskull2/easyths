@@ -249,6 +249,26 @@ else:
     print(f"条件买入设置失败: {error}")
 ```
 
+### 条件卖出
+
+设置条件卖出单，当股价达到目标价格时自动触发卖出。
+
+```python
+result = client.condition_sell(
+    stock_code="600000",      # 股票代码
+    target_price=15.00,       # 目标触发价格
+    quantity=100,             # 卖出数量（股票100的倍数，可转债10的倍数）
+    expire_days=30            # 有效期（可选1/3/5/10/20/30，默认30）
+)
+
+if result["success"]:
+    data = result["data"]
+    print(f"条件卖出设置成功: {data['message']}")
+else:
+    error = result["message"]
+    print(f"条件卖出设置失败: {error}")
+```
+
 ### 止盈止损
 
 为持仓股票设置止盈止损策略，当价格达到止盈或止损条件时自动触发卖出。
@@ -591,6 +611,7 @@ class TradeClient:
     def market_sell(self, stock_code: str, quantity: int, execution_strategy: int = 3, timeout: float = None) -> dict: ...
     def cancel_order(self, stock_code: str = None, cancel_type: str = "all", timeout: float = None) -> dict: ...
     def condition_buy(self, stock_code: str, target_price: float, quantity: int, expire_days: int = 30, timeout: float = None) -> dict: ...
+    def condition_sell(self, stock_code: str, target_price: float, quantity: int, expire_days: int = 30, timeout: float = None) -> dict: ...
     def stop_loss_profit(self, stock_code: str, stop_loss_percent: float, stop_profit_percent: float, quantity: int = None, expire_days: int = 30, timeout: float = None) -> dict: ...
     def query_condition_orders(self, return_type: str = "json", timeout: float = None) -> dict: ...
     def cancel_condition_orders(self, stock_code: str = None, order_type: str = None, timeout: float = None) -> dict: ...

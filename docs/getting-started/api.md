@@ -708,6 +708,59 @@ POST /api/v1/operations/condition_buy
 }
 ```
 
+### condition_sell - 条件卖出
+
+设置条件卖出单，当股价达到目标价格时自动触发卖出。
+
+```http
+POST /api/v1/operations/condition_sell
+```
+
+**请求参数**:
+```json
+{
+  "params": {
+    "stock_code": "600000",
+    "target_price": 15.00,
+    "quantity": 100,
+    "expire_days": 30
+  }
+}
+```
+
+**参数说明**:
+
+| 参数 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| stock_code | string | 是 | 股票代码（6位数字） |
+| target_price | number | 是 | 目标价格（触发价格） |
+| quantity | integer | 是 | 卖出数量（股票必须是100的倍数，可转债必须是10的倍数） |
+| expire_days | integer | 否 | 有效期（自然日），可选1/3/5/10/20/30，默认30 |
+
+**响应示例**:
+```json
+{
+  "success": true,
+  "message": "操作成功",
+  "data": {
+    "operation_id": "...",
+    "result": {
+      "success": true,
+      "data": {
+        "stock_code": "600000",
+        "target_price": 15.00,
+        "quantity": 100,
+        "operation": "condition_sell",
+        "success": true,
+        "message": "执行600000的条件卖出成功"
+      },
+      "message": null,
+      "timestamp": "2025-12-26T10:30:00.123456"
+    }
+  }
+}
+```
+
 ### stop_loss_profit - 止盈止损
 
 为持仓股票设置止盈止损策略，当价格达到止盈或止损条件时自动触发卖出。
